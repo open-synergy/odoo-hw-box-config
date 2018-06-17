@@ -74,10 +74,12 @@ do_manage_module_menu(){
 }
 
 do_open_raspbian_config(){
-    sudo raspi-config
-    RES=$?
-    if [ $RES -ne 0 ]; then
+    command -v raspi-config
+    if [ $? -ne 0 ]; then
         whiptail --msgbox "raspi-config is not installed" 10 60
+        return 0
+    else
+        sudo raspi-config
     fi
 }
 
@@ -100,6 +102,22 @@ do_update_program(){
             whiptail --msgbox "Failed to update program" 10 60
             return 0
         fi
+    fi
+}
+
+do_open_wicd(){
+    command -v wicd-ncurses
+    if [ $? -ne 0 ]; then
+        whiptail --yesno "wicd-ncurses is not installed. Install wicd-ncurses" 10 60
+        RES=$?
+        if [ $? -eq 0 ]; then
+            sudo apt-get install wicd-ncurses
+            do_open_wicd
+        else
+            return 0
+        fi
+    else
+        wicd-ncurses
     fi
 }
         
@@ -227,7 +245,7 @@ while true; do
                 do_manage_hw_proxy_box
                 ;;
             D)
-                wicd-ncurses
+                do_open_wicd
                 ;;
             E)
                 do_open_raspbian_config
