@@ -18,7 +18,7 @@ calc_wt_size() {
 
 do_check_service_status(){
     ps -ef | grep -v grep | grep openerp-server #TODO: nama daemon dinamis
-    if [ $? -eg 0 ]; then
+    if [ $? -eq 0 ]; then
         whiptail --msgbox "Odoo HW Proxy Service is running" 10 60
     else
         whiptail --msgbox "Odoo HW Proxy Service is not running" 10 60
