@@ -184,7 +184,7 @@ do_manage_hw_proxy_box(){
         #TODO: Harusnya kembali ke menu sebelumnya, bukan ke menu utama
         case "$MENU" in
             A)
-                sudo vim ${ODOO_CONFIGURATION_FILE}
+                sudo vim ${ODOO_CONFIG_FILE}
                 return 0
                 ;;
             B)
@@ -192,7 +192,7 @@ do_manage_hw_proxy_box(){
                 return 0
                 ;;
             C)
-                sudo vim /etc/odoo-hw-box-config.conf
+                sudo vim /etc/odoo-hw-box-config.conf #TODO
                 return 0
                 ;;
         esac
