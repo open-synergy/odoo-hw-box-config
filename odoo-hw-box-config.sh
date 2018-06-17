@@ -10,6 +10,7 @@ ODOO_DAEMON_NAME=${odoo_daemon_name}
 FILE_MANAGER=${file_manager}
 NETWORK_MANEGER=${network_manager}
 
+BACKTITLE="Odoo HW Proxy Box Configuration"
 
 calc_wt_size() {
     WT_HEIGHT=17
@@ -213,7 +214,7 @@ do_manage_hw_proxy_box(){
 }
 
 do_start_stop_service_menu(){
-    MENU=$(whiptail --title "Start/Stop Service" --menu "Select menu" 15 60 4 \
+    MENU=$(whiptail backtitle ${BACKTITLE} --title "Start/Stop Service" --menu "Select menu" 15 60 4 \
         "A" "Start Service" \
         "B" "Stop Service" \
         "C" "Restart Service"  3>&1 1>&2 2>&3)
@@ -252,7 +253,7 @@ do_start_stop_service_menu(){
 calc_wt_size
 
 while true; do
-    WEKS=$(whiptail --backtitle "Odoo HW Proxy Box Configuration" --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
+    WEKS=$(whiptail --backtitle ${BACKTITLE} --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
         --cancel-button Finish --ok-button Select \
         "A" "Check Server Status" \
         "B" "Stop Start Service" \
