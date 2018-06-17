@@ -96,7 +96,7 @@ do_update_program(){
     if [ $RES -eq 1 ]; then
         return 0
     else
-        cd tmp
+        cd /tmp
         if [ -f odoo-hw-box-config.sh ]; then
             sudo rm odoo-hw-box-config.sh
             if [ $? -ne 0 ]; then
