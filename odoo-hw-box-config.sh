@@ -98,7 +98,7 @@ do_update_program(){
     else
         git fetch origin master && git rebase origin/master
         if [ $? -eq 0 ]; then
-            exec "./odoo-hw-box-config.sh"
+            exec "odoo-hw-box-config.sh"
             return 0
         else
             whiptail --msgbox "Failed to update program" 10 60
@@ -192,7 +192,7 @@ do_manage_hw_proxy_box(){
                 return 0
                 ;;
             C)
-                vim config
+                sudo vim /etc/odoo-hw-box-config.sh
                 return 0
                 ;;
         esac
