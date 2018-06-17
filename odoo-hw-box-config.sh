@@ -17,8 +17,9 @@ calc_wt_size() {
 }
 
 do_check_service_status(){
-    if [ -f $PIDFILE ]; then
-        whiptail --msgbox "Odoo HW Proxy Service is running: " 10 60
+    ps -ef | grep -v grep | grep openerp-server #TODO: nama daemon dinamis
+    if [ $? -eg 0 ]; then
+        whiptail --msgbox "Odoo HW Proxy Service is running" 10 60
     else
         whiptail --msgbox "Odoo HW Proxy Service is not running" 10 60
     fi
@@ -79,6 +80,18 @@ do_open_cups_config(){
     return 0
 }
 
+do_exit_terminal(){
+    whiptail --yesno "Quit to terminal?" 10 60
+    RES=$?
+    if [ $RES -eq 1 ]; then
+        return 0
+    else
+        clear
+        exit 0
+    fi
+
+}
+
 do_restart_server(){
     whiptail --yesno "Are you sure want to restart server?" 10 60
     RES=$?
@@ -132,6 +145,7 @@ do_start_stop_service_menu(){
                 fi
                 ;;
         esac
+        return 0
     fi
 }
 
@@ -172,7 +186,7 @@ while true; do
                 do_open_cups_config
                 ;;
             X)
-                exit 0
+                do_exit_terminal
                 ;;
             Y)
                 do_restart_server
