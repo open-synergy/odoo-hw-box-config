@@ -252,7 +252,7 @@ do_start_stop_service_menu(){
 calc_wt_size
 
 while true; do
-    WEKS=$(whiptail --title "Odoo HW Proxy Box Configuration" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
+    WEKS=$(whiptail --backtitle "Odoo HW Proxy Box Configuration" --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
         --cancel-button Finish --ok-button Select \
         "A" "Check Server Status" \
         "B" "Stop Start Service" \
