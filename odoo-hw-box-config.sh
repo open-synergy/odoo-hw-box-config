@@ -8,6 +8,7 @@ ODOO_CONFIG_FILE=${odoo_configuration_file}
 ODOO_DAEMON_FILE=${odoo_daemon_file}
 ODOO_DAEMON_NAME=${odoo_daemon_name}
 FILE_MANAGER=${file_manager}
+NETWORK_MANEGER=${network_manager}
 
 
 calc_wt_size() {
@@ -106,28 +107,30 @@ do_update_program(){
     fi
 }
 
-do_open_wicd(){
-    command -v wicd-ncurses
-    if [ $? -ne 0 ]; then
-        whiptail --yesno "wicd-ncurses is not installed. Install wicd-ncurses" 10 60
+do_open_network_manager(){
+    command -v ${NETWORK_MANAGER}
+    NETWORK_MANAGER_EXIST=$?
+    if [ ${NETWORK_MANAGER_EXIST} -ne 0 ]; then
+        whiptail --yesno "Network manager is not installed. Install network manager?" 10 60
         RES=$?
-        if [ $? -eq 0 ]; then
-            sudo apt-get install wicd-ncurses
-            do_open_wicd
+        if [ $RES -eq 0 ]; then
+            sudo apt-get install ${NETWORK_MANAGER}
+            do_open_network_manager
         else
             return 0
         fi
     else
-        wicd-ncurses
+        ${NETWORK_MANAGER}
     fi
 }
 
 do_open_file_manager(){
     command -v ${FILE_MANAGER}
-    if [ $? -ne 0 ]; then
-        whiptail --yesno "file manager is not installed. Install file manager" 10 60
+    FILE_MANAGER_EXIST=$?
+    if [ ${FILE_MANAGER_EXIST} -ne 0 ]; then
+        whiptail --yesno "file manager is not installed. Install file manager?" 10 60
         RES=$?
-        if [ $? -eq 0 ]; then
+        if [ $RES -eq 0 ]; then
             sudo apt-get install ${FILE_MANAGER}
             do_open_file_manager
         else
@@ -263,7 +266,7 @@ while true; do
                 do_manage_hw_proxy_box
                 ;;
             D)
-                do_open_wicd
+                do_open_network_manager
                 ;;
             E)
                 do_open_raspbian_config
