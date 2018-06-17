@@ -2,7 +2,7 @@
 
 # Get variable from config file
 
-source config
+source /etc/odoo-hw-box-config
 ODOO_PIDFILE=${odoo_pid_file}
 ODOO_CONFIG_FILE=${odoo_configuration_file}
 ODOO_DAEMON_FILE=${odoo_daemon_file}
