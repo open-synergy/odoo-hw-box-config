@@ -25,6 +25,8 @@ do_check_service_status(){
     fi
 }
 
+do_manage_
+
 do_manage_module_menu(){
     MENU=$(whiptail --title "Manage Modules" --menu "Select menu" 15 60 4 \
         "A" "Add/Remove Modules" \
@@ -97,9 +99,6 @@ do_update_program(){
     fi
 }
         
-
-
-
 do_exit_terminal(){
     whiptail --yesno "Quit to terminal?" 10 60
     RES=$?
@@ -128,6 +127,28 @@ do_shutdown_server(){
         return 0
     else
         sudo halt
+    fi
+}
+
+do_manage_hw_proxy_box(){
+    MENU=$(whiptail --title "HW Proxy Box Configuration" --menu "Select menu" 15 60 4 \
+        "A" "Edit Configuration File" \
+        "B" "Edit Daemon File"  3>&1 1>&2 2>&3)
+    RES=$?
+    if [ $RES -eq 1 ]; then
+        return 0
+    else
+        #TODO: Harusnya kembali ke menu sebelumnya, bukan ke menu utama
+        case "$MENU" in
+            A)
+                sudo vim /etc/odoo-server.conf #TODO: Gunakan variabel. Gunakan editor default
+                return 0
+                ;;
+            B)
+                sudo vim /etc/init.d/odoo-server.conf #TODO: Gunakan variabel. Gunakan editor default
+                return 0
+                ;;
+        esac
     fi
 }
 
@@ -175,7 +196,7 @@ while true; do
         --cancel-button Finish --ok-button Select \
         "A" "Check Server Status" \
         "B" "Stop Start Service" \
-        "C" "Manage Module" \
+        "C" "HW Proxy Box Configuration" \
         "D" "Network Configuration" \
         "E" "Raspbian Configuration" \
         "F" "CUPS Configuration" \
@@ -194,7 +215,7 @@ while true; do
                 do_start_stop_service_menu
                 ;;
             C)
-                do_manage_module_menu
+                do_manage_hw_proxy_box
                 ;;
             D)
                 wicd-ncurses
