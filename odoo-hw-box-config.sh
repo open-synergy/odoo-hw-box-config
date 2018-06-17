@@ -301,7 +301,7 @@ while true; do
                 do_restart_server
                 ;;
             Z)
-                do_shutdown_menu
+                do_shutdown_server
                 ;;
         esac
     else
