@@ -153,7 +153,7 @@ do_manage_hw_proxy_box(){
                 sudo vim ${ODOO_DAEMON_FILE}
                 return 0
                 ;;
-            B)
+            C)
                 vim config
                 return 0
                 ;;
