@@ -7,6 +7,7 @@ ODOO_PIDFILE=${odoo_pid_file}
 ODOO_CONFIG_FILE=${odoo_configuration_file}
 ODOO_DAEMON_FILE=${odoo_daemon_file}
 ODOO_DAEMON_NAME=${odoo_daemon_name}
+FILE_MANAGER=${file_manager}
 
 
 calc_wt_size() {
@@ -120,6 +121,22 @@ do_open_wicd(){
         wicd-ncurses
     fi
 }
+
+do_open_file_manager(){
+    command -v ${FILE_MANAGER}
+    if [ $? -ne 0 ]; then
+        whiptail --yesno "file manager is not installed. Install file manager" 10 60
+        RES=$?
+        if [ $? -eq 0 ]; then
+            sudo apt-get install ${FILE_MANAGER}
+            do_open_file_manager
+        else
+            return 0
+        fi
+    else
+        ${FILE_MANAGER}
+    fi
+}
         
 do_exit_terminal(){
     whiptail --yesno "Quit to terminal?" 10 60
@@ -226,6 +243,7 @@ while true; do
         "C" "HW Proxy Box Configuration" \
         "D" "Network Configuration" \
         "E" "Raspbian Configuration" \
+        "G" "File Manager" \
         "F" "CUPS Configuration" \
         "W" "Update This Program" \
         "X" "Exit to Terminal" \
@@ -252,6 +270,9 @@ while true; do
                 ;;
             F)
                 do_open_cups_config
+                ;;
+            G)
+                do_open_file_manager
                 ;;
             W)
                 do_update_program
