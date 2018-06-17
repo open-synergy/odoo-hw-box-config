@@ -192,7 +192,7 @@ do_manage_hw_proxy_box(){
                 return 0
                 ;;
             C)
-                sudo vim /etc/odoo-hw-box-config.sh
+                sudo vim /etc/odoo-hw-box-config.conf
                 return 0
                 ;;
         esac
