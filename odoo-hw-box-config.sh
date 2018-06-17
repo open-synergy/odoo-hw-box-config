@@ -96,7 +96,20 @@ do_update_program(){
     if [ $RES -eq 1 ]; then
         return 0
     else
-        git fetch origin master && git rebase origin/master
+        cd tmp
+        if [ -f odoo-hw-box-config.sh ]; then
+            sudo rm odoo-hw-box-config.sh
+            if [ $? -ne 0 ]; then
+                whiptail --msgbox "Failed to remove previous version" 10 60
+                return 0
+            fi
+        fi
+        wget https://raw.githubusercontent.com/open-synergy/odoo-hw-box-config/master/odoo-hw-box-config.sh
+        if [ $? -ne 0 ]; then
+            whiptail --msgbox "Failed to download latest version" 10 60
+            return 0
+        fi
+        sudo cp odoo-hw-box-config.sh /usr/bin
         if [ $? -eq 0 ]; then
             exec "odoo-hw-box-config.sh"
             return 0
