@@ -1,7 +1,13 @@
 #!/bin/bash
 
-#TODO: How to make this dynamic
-PIDFILE=/var/run/openerp-server.pid
+# Get variable from config file
+
+source config
+ODOO_PIDFILE=${odoo_pid_file}
+ODOO_CONFIG_FILE=${odoo_configuration_file}
+ODOO_DAEMON_FILE=${odoo_daemon_file}
+ODOO_DAEMON_NAME=${odoo_daemon_name}
+
 
 calc_wt_size() {
     WT_HEIGHT=17
@@ -17,15 +23,13 @@ calc_wt_size() {
 }
 
 do_check_service_status(){
-    ps -ef | grep -v grep | grep openerp-server #TODO: nama daemon dinamis
+    ps -ef | grep -v grep | grep ${ODOO_DAEMON_NAME}
     if [ $? -eq 0 ]; then
         whiptail --msgbox "Odoo HW Proxy Service is running" 10 60
     else
         whiptail --msgbox "Odoo HW Proxy Service is not running" 10 60
     fi
 }
-
-do_manage_
 
 do_manage_module_menu(){
     MENU=$(whiptail --title "Manage Modules" --menu "Select menu" 15 60 4 \
@@ -133,7 +137,8 @@ do_shutdown_server(){
 do_manage_hw_proxy_box(){
     MENU=$(whiptail --title "HW Proxy Box Configuration" --menu "Select menu" 15 60 4 \
         "A" "Edit Configuration File" \
-        "B" "Edit Daemon File"  3>&1 1>&2 2>&3)
+        "B" "Edit Daemon File" \
+        "B" "Edit Configuration File"  3>&1 1>&2 2>&3)
     RES=$?
     if [ $RES -eq 1 ]; then
         return 0
@@ -141,11 +146,15 @@ do_manage_hw_proxy_box(){
         #TODO: Harusnya kembali ke menu sebelumnya, bukan ke menu utama
         case "$MENU" in
             A)
-                sudo vim /etc/odoo-server.conf #TODO: Gunakan variabel. Gunakan editor default
+                sudo vim ${ODOO_CONFIGURATION_FILE}
                 return 0
                 ;;
             B)
-                sudo vim /etc/init.d/odoo-server #TODO: Gunakan variabel. Gunakan editor default
+                sudo vim ${ODOO_DAEMON_FILE}
+                return 0
+                ;;
+            B)
+                vim config
                 return 0
                 ;;
         esac
@@ -164,21 +173,21 @@ do_start_stop_service_menu(){
         #TODO: Harusnya kembali ke menu sebelumnya, bukan ke menu utama
         case "$MENU" in
             A)
-                sudo /etc/init.d/odoo-server start
+                sudo ${ODOO_DAEMON_FILE} start
                 RES=$?
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to start Odoo HW Proxy Service" 10 60
                 fi
                 ;;
             B)
-                sudo /etc/init.d/odoo-server stop
+                sudo ${ODOO_DAEMON_FILE} stop
                 RES=$?
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to stop Odoo HW Proxy Service" 10 60
                 fi
                 ;;
             C)
-                sudo /etc/init.d/odoo-server restart
+                sudo ${ODOO_DAEMON_FILE} restart
                 RES=$?
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to restart Odoo HW Proxy Service" 10 60

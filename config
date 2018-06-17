@@ -1,0 +1,4 @@
+odoo_configuration_file=/etc/odoo-server.conf
+odoo_daemon_file=/etc/init.d/odoo-server
+odoo_pid_file=/var/run/openerp-server.pid
+odoo_daemon_name=openerp-server
