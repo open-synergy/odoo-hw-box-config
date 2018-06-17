@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #TODO: How to make this dynamic
-PIDFILE=/var/run/odoo-server.pid
+PIDFILE=/var/run/openerp-server.pid
 
 calc_wt_size() {
     WT_HEIGHT=17
@@ -67,10 +67,10 @@ do_manage_module_menu(){
 }
 
 do_open_raspbian_config(){
-    sudo raspbian-config
+    sudo raspi-config
     RES=$?
     if [ $RES -ne 0 ]; then
-        whiptail --msgbox "raspian-config is not installed" 10 60
+        whiptail --msgbox "raspi-config is not installed" 10 60
     fi
 }
 
