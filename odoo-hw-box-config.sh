@@ -145,7 +145,7 @@ do_manage_hw_proxy_box(){
                 return 0
                 ;;
             B)
-                sudo vim /etc/init.d/odoo-server.conf #TODO: Gunakan variabel. Gunakan editor default
+                sudo vim /etc/init.d/odoo-server #TODO: Gunakan variabel. Gunakan editor default
                 return 0
                 ;;
         esac
