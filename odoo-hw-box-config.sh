@@ -80,6 +80,26 @@ do_open_cups_config(){
     return 0
 }
 
+do_update_program(){
+    whiptail --yesno "Update this program?" 10 60
+    RES=$?
+    if [ $RES -eq 1 ]; then
+        return 0
+    else
+        git fetch origin master && git rebase origin/master
+        if [ $? -eq 0 ]; then
+            exec "./odoo-hw-box-config"
+            return 0
+        else
+            whiptail --msgbox "Failed to update program" 10 60
+            return 0
+        fi
+    fi
+}
+        
+
+
+
 do_exit_terminal(){
     whiptail --yesno "Quit to terminal?" 10 60
     RES=$?
@@ -89,7 +109,6 @@ do_exit_terminal(){
         clear
         exit 0
     fi
-
 }
 
 do_restart_server(){
@@ -160,6 +179,7 @@ while true; do
         "D" "Network Configuration" \
         "E" "Raspbian Configuration" \
         "F" "CUPS Configuration" \
+        "W" "Update This Program" \
         "X" "Exit to Terminal" \
         "Y" "Restart Server" \
         "Z" "Shutdown Server"  3>&1 1>&2 2>&3)
@@ -184,6 +204,9 @@ while true; do
                 ;;
             F)
                 do_open_cups_config
+                ;;
+            W)
+                do_update_program
                 ;;
             X)
                 do_exit_terminal
