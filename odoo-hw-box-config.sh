@@ -88,7 +88,7 @@ do_update_program(){
     else
         git fetch origin master && git rebase origin/master
         if [ $? -eq 0 ]; then
-            exec "./odoo-hw-box-config"
+            exec "./odoo-hw-box-config.sh"
             return 0
         else
             whiptail --msgbox "Failed to update program" 10 60
