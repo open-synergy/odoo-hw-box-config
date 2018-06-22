@@ -11,7 +11,7 @@ FILE_MANAGER=${file_manager}
 NETWORK_MANEGER=${network_manager}
 TEXT_EDITOR=${text_editor}
 
-BACKTITLE="Odoo HW Proxy Box Configuration"
+BACKTITLE="Odoo HW Proxy Box Configuration - Copyright 2018 Opensynergy Indonesia"
 
 calc_wt_size() {
     WT_HEIGHT=17
@@ -36,7 +36,7 @@ do_check_service_status(){
 }
 
 do_manage_module_menu(){
-    MENU=$(whiptail --title "Manage Modules" --menu "Select menu" 15 60 4 \
+    MENU=$(whiptail --backtitle "${BACKTITLE}" --title "Manage Modules" --menu "Select menu" 15 60 4 \
         "A" "Add/Remove Modules" \
         "B" "Update Module List" \
         "C" "Add Repositories"  3>&1 1>&2 2>&3)
@@ -188,7 +188,7 @@ do_shutdown_server(){
 }
 
 do_manage_hw_proxy_box(){
-    MENU=$(whiptail --title "HW Proxy Box Configuration" --menu "Select menu" 15 60 4 \
+    MENU=$(whiptail --backtitle "${BACKTITLE}" --title "HW Proxy Box Configuration" --menu "Select menu" 15 60 4 \
         "A" "Edit Odoo Configuration File" \
         "B" "Edit Odoo Daemon File" \
         "C" "Edit Application Configuration File" \
@@ -220,7 +220,7 @@ do_manage_hw_proxy_box(){
 }
 
 do_start_stop_service_menu(){
-    MENU=$(whiptail --backtitle "Odoo HW Proxy Box Configuration" --title "Start/Stop Service" --menu "Select menu" 15 60 4 \
+    MENU=$(whiptail --backtitle "${BACKTITLE}" --title "Start/Stop Service" --menu "Select menu" 15 60 4 \
         "A" "Start Service" \
         "B" "Stop Service" \
         "C" "Restart Service"  3>&1 1>&2 2>&3)
@@ -259,7 +259,7 @@ do_start_stop_service_menu(){
 calc_wt_size
 
 while true; do
-    WEKS=$(whiptail --backtitle "Odoo HW Proxy Box Configuration" --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
+    WEKS=$(whiptail --backtitle "${BACKTITLE}" --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
         --cancel-button Finish --ok-button Select \
         "A" "Check Server Status" \
         "B" "Stop Start Service" \
