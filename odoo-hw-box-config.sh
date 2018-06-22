@@ -9,6 +9,7 @@ ODOO_DAEMON_FILE=${odoo_daemon_file}
 ODOO_DAEMON_NAME=${odoo_daemon_name}
 FILE_MANAGER=${file_manager}
 NETWORK_MANEGER=${network_manager}
+TEXT_EDITOR=${text_editor}
 
 BACKTITLE="Odoo HW Proxy Box Configuration"
 
@@ -198,15 +199,15 @@ do_manage_hw_proxy_box(){
         #TODO: Harusnya kembali ke menu sebelumnya, bukan ke menu utama
         case "$MENU" in
             A)
-                sudo vim ${ODOO_CONFIG_FILE}
+                sudo ${TEXT_EDITOR} ${ODOO_CONFIG_FILE}
                 return 0
                 ;;
             B)
-                sudo vim ${ODOO_DAEMON_FILE}
+                sudo ${TEXT_EDITOR} ${ODOO_DAEMON_FILE}
                 return 0
                 ;;
             C)
-                sudo vim /etc/odoo-hw-box-config.conf #TODO
+                sudo ${TEXT_EDITOR} /etc/odoo-hw-box-config.conf #TODO
                 return 0
                 ;;
         esac
