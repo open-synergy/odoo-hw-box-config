@@ -189,9 +189,10 @@ do_shutdown_server(){
 
 do_manage_hw_proxy_box(){
     MENU=$(whiptail --title "HW Proxy Box Configuration" --menu "Select menu" 15 60 4 \
-        "A" "Edit Configuration File" \
-        "B" "Edit Daemon File" \
-        "C" "Edit Configuration File"  3>&1 1>&2 2>&3)
+        "A" "Edit Odoo Configuration File" \
+        "B" "Edit Odoo Daemon File" \
+        "C" "Edit Application Configuration File"  
+        "D" "Reload Application" 3>&1 1>&2 2>&3)
     RES=$?
     if [ $RES -eq 1 ]; then
         return 0
@@ -208,6 +209,10 @@ do_manage_hw_proxy_box(){
                 ;;
             C)
                 sudo ${TEXT_EDITOR} /etc/odoo-hw-box-config.conf #TODO
+                return 0
+                ;;
+            D)
+                exec "odoo-hw-box-config.sh"
                 return 0
                 ;;
         esac
