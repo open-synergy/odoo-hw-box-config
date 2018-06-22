@@ -2,7 +2,8 @@
 
 # Get variable from config file
 
-source /etc/odoo-hw-box-config.conf
+# source /etc/odoo-hw-box-config.conf
+source config
 ODOO_PIDFILE=${odoo_pid_file}
 ODOO_CONFIG_FILE=${odoo_configuration_file}
 ODOO_DAEMON_FILE=${odoo_daemon_file}
@@ -201,19 +202,19 @@ do_manage_hw_proxy_box(){
         case "$MENU" in
             A)
                 sudo ${TEXT_EDITOR} ${ODOO_CONFIG_FILE}
-                return 0
+                do_manage_hw_proxy_box
                 ;;
             B)
                 sudo ${TEXT_EDITOR} ${ODOO_DAEMON_FILE}
-                return 0
+                do_manage_hw_proxy_box
                 ;;
             C)
                 sudo ${TEXT_EDITOR} /etc/odoo-hw-box-config.conf #TODO
-                return 0
+                do_manage_hw_proxy_box
                 ;;
             D)
                 exec "odoo-hw-box-config.sh"
-                return 0
+                do_manage_hw_proxy_box
                 ;;
         esac
     fi
@@ -236,6 +237,7 @@ do_start_stop_service_menu(){
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to start Odoo HW Proxy Service" 10 60
                 fi
+                do_start_stop_service_menu
                 ;;
             B)
                 sudo ${ODOO_DAEMON_FILE} stop
@@ -243,6 +245,7 @@ do_start_stop_service_menu(){
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to stop Odoo HW Proxy Service" 10 60
                 fi
+                do_start_stop_service_menu
                 ;;
             C)
                 sudo ${ODOO_DAEMON_FILE} restart
@@ -250,6 +253,7 @@ do_start_stop_service_menu(){
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to restart Odoo HW Proxy Service" 10 60
                 fi
+                do_start_stop_service_menu
                 ;;
         esac
         return 0

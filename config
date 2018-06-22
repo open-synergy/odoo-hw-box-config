@@ -4,4 +4,4 @@ odoo_pid_file=/var/run/openerp-server.pid
 odoo_daemon_name=openerp-server
 file_manager=mc
 network_manager=wicd-curses
-text-editor=vim
+text_editor=vim
