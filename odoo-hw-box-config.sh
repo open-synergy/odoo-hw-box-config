@@ -236,7 +236,7 @@ do_start_stop_service_menu(){
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to start Odoo HW Proxy Service" 10 60
                 fi
-                return 0
+                do_start_stop_service_menu
                 ;;
             B)
                 sudo ${ODOO_DAEMON_FILE} stop
@@ -244,7 +244,7 @@ do_start_stop_service_menu(){
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to stop Odoo HW Proxy Service" 10 60
                 fi
-                return 0
+                do_start_stop_service_menu
                 ;;
             C)
                 sudo ${ODOO_DAEMON_FILE} restart
@@ -252,7 +252,7 @@ do_start_stop_service_menu(){
                 if [ $RES -ne 0 ]; then
                     whiptail --msgbox "Failed to restart Odoo HW Proxy Service" 10 60
                 fi
-                return 0
+                do_start_stop_service_menu
                 ;;
         esac
         return 0
