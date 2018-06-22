@@ -191,7 +191,7 @@ do_manage_hw_proxy_box(){
     MENU=$(whiptail --title "HW Proxy Box Configuration" --menu "Select menu" 15 60 4 \
         "A" "Edit Odoo Configuration File" \
         "B" "Edit Odoo Daemon File" \
-        "C" "Edit Application Configuration File"  
+        "C" "Edit Application Configuration File" \
         "D" "Reload Application" 3>&1 1>&2 2>&3)
     RES=$?
     if [ $RES -eq 1 ]; then
