@@ -34,48 +34,6 @@ do_check_service_status(){
     fi
 }
 
-do_manage_module_menu(){
-    MENU=$(whiptail --title "Manage Modules" --menu "Select menu" 15 60 4 \
-        "A" "Add/Remove Modules" \
-        "B" "Update Module List" \
-        "C" "Add Repositories"  3>&1 1>&2 2>&3)
-    RES=$?
-    if [ $RES -eq 1 ]; then
-        return 0
-    else
-        case "$MENU" in
-            A)
-                whiptail --msgbox "Feature is not available" 10 60
-                ;;
-            B)
-                whiptail --msgbox "Feature is not available" 10 60
-                ;;
-            C)
-                whiptail --msgbox "Feature is not available" 10 60
-                ;;
-        esac
-    fi
-    return 0
-
-    # args=("web" "" ON)
-    # args+=("hw_proxy" "" ON)
-    # MYDIR=/home/andhit_r/odoo8/oca_web
-    # for x in $(find $MYDIR -mindepth 1 -maxdepth 1 -type d -not -name "setup" -not -name ".git" -printf "%f\n")
-    # do
-    #     args+=("${x}" "" ON)
-    # done
-
-    # MODULS=$(whiptail --title "Select modules to use" --checklist \
-    #     "List of avalaible modules" 15 60 4 \
-    #     "${args[@]}" 3>&1 1>&2 2>&3)
-    # RES=$?
-    # if [ $RES -eq 1 ]; then
-    #     return 0
-    # else
-    #     return 0
-    # fi
-}
-
 do_open_raspbian_config(){
     command -v raspi-config
     if [ $? -ne 0 ]; then
@@ -154,6 +112,32 @@ do_open_file_manager(){
         ${FILE_MANAGER}
     fi
 }
+
+do_setup_addons(){
+    MENU_SETUP=$(whiptail --title "Setup Addons" --menu "Select menu" 15 60 4 \
+        "A" "OpenSynergy Addon" \
+        "B" "OCA Pos Addon"  3>&1 1>&2 2>&3)
+    RES=$?
+    if [ $RES -eq 1 ]; then
+        return 0
+    else
+        case "$MENU_SETUP" in
+            A)
+                ./opensynergy-module.sh
+                return 0
+                ;;
+            B)
+                ./oca-pos-module.sh
+                return 0
+                ;;
+        esac
+    fi
+}
+
+do_installation(){
+    whiptail --msgbox "Odoo Installation is Started" 10 60
+    ./odoo-installaton.sh
+}
         
 do_exit_terminal(){
     whiptail --yesno "Quit to terminal?" 10 60
@@ -198,15 +182,15 @@ do_manage_hw_proxy_box(){
         #TODO: Harusnya kembali ke menu sebelumnya, bukan ke menu utama
         case "$MENU" in
             A)
-                sudo vim ${ODOO_CONFIG_FILE}
+                sudo pico ${ODOO_CONFIG_FILE}
                 return 0
                 ;;
             B)
-                sudo vim ${ODOO_DAEMON_FILE}
+                sudo pico ${ODOO_DAEMON_FILE}
                 return 0
                 ;;
             C)
-                sudo vim /etc/odoo-hw-box-config.conf #TODO
+                sudo pico /etc/odoo-hw-box-config.conf #TODO
                 return 0
                 ;;
         esac
@@ -253,7 +237,7 @@ do_start_stop_service_menu(){
 calc_wt_size
 
 while true; do
-    WEKS=$(whiptail --backtitle "Odoo HW Proxy Box Configuration" --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
+    MAIN_MENU=$(whiptail --backtitle "Odoo HW Proxy Box Configuration" --title "Main Menu" --menu "Select menu" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT \
         --cancel-button Finish --ok-button Select \
         "A" "Check Server Status" \
         "B" "Stop Start Service" \
@@ -261,6 +245,8 @@ while true; do
         "D" "Network Configuration" \
         "E" "Raspbian Configuration" \
         "G" "File Manager" \
+        "H" "Setup Addons" \
+        "I" "Odoo Installation" \
         "F" "CUPS Configuration" \
         "W" "Update This Program" \
         "X" "Exit to Terminal" \
@@ -269,7 +255,7 @@ while true; do
     
     result=$?
     if [ $result = 0 ]; then
-        case "$WEKS" in
+        case "$MAIN_MENU" in
             A)
                 do_check_service_status
                 ;;
@@ -290,6 +276,12 @@ while true; do
                 ;;
             G)
                 do_open_file_manager
+                ;;
+            H)
+                do_setup_addons
+                ;;
+            I)
+                do_installation
                 ;;
             W)
                 do_update_program
