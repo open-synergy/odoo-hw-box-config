@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CLONE_DIR="/home/mike/opnsynid-hardware"
+CLONE_DIR="/home/pi/opnsynid-hardware"
 
 if [ ! -d $CLONE_DIR ]; then
     echo "Clone Github hw_proxy_cups"

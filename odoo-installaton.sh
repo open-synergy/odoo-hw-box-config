@@ -14,8 +14,6 @@ pip install evdev
 pip install simplejson
 pip install unittest2
 
-# --upgrade because websocket_client in wheezy is bad:
-# https://github.com/docker/compose/issues/1288
 pip install --upgrade websocket_client
 
 groupadd usbusers
@@ -27,7 +25,7 @@ mkdir /var/log/odoo
 chown pi:pi /var/log/odoo
 
 echo -e "* Create server config file"
-if [ ! -f /etc/$OE.conf]; then
+if [ ! -f /etc/$OE.conf ]; then
 	sudo cp $OE.conf /etc/
 	sudo chown pi:pi /etc/$OE.conf
 	sudo chmod 640 /etc/$OE.conf

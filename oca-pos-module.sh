@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CLONE_DIR="/home/mike/oca-pos"
+CLONE_DIR="/home/pi/oca-pos"
 
 if [ ! -d $CLONE_DIR ]; then
     echo "Clone Github hw_proxy_cups"

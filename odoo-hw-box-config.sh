@@ -136,7 +136,7 @@ do_setup_addons(){
 
 do_installation(){
     whiptail --msgbox "Odoo Installation is Started" 10 60
-    ./odoo-installaton.sh
+    sudo ./odoo-installaton.sh
 }
         
 do_exit_terminal(){
