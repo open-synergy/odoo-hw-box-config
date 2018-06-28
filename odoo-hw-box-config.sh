@@ -155,6 +155,11 @@ do_open_file_manager(){
         ${FILE_MANAGER}
     fi
 }
+
+do_installation(){
+    whiptail --msgbox "Odoo Installation is Started" 10 60
+    sudo ./odoo-installaton.sh
+}
         
 do_exit_terminal(){
     whiptail --yesno "Quit to terminal?" 10 60
@@ -269,8 +274,9 @@ while true; do
         "C" "HW Proxy Box Configuration" \
         "D" "Network Configuration" \
         "E" "Raspbian Configuration" \
-        "G" "File Manager" \
-        "F" "CUPS Configuration" \
+        "F" "File Manager" \
+        "G" "Odoo Installation" \
+        "H" "CUPS Configuration" \
         "W" "Update This Program" \
         "X" "Exit to Terminal" \
         "Y" "Restart Server" \
@@ -295,10 +301,13 @@ while true; do
                 do_open_raspbian_config
                 ;;
             F)
-                do_open_cups_config
+                do_open_file_manager
                 ;;
             G)
-                do_open_file_manager
+                do_installation
+                ;;
+            H)
+                do_open_cups_config
                 ;;
             W)
                 do_update_program
